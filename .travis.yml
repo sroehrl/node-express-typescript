@@ -2,8 +2,9 @@ language: node_js
 node_js:
   - "stable"
 cache:
+  yarn: true
   directories:
-    - "$HOME/.npm"
+    - node_modules
 install:
   - yarn global add nyc
   - yarn global add jest
