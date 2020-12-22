@@ -10,7 +10,7 @@
     "run:dev": "nodemon -r dotenv/config dist/index.js",
     "build:dev": "tsc --watch --preserveWatchOutput",
     "start": "concurrently \\\"yarn:build:dev\\\" \\\"yarn:run:dev\\\"",
-    "test": "jest --setupFiles --runInBand"
+    "test": "jest --setupFiles --runInBand --coverage"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
