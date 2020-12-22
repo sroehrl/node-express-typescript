@@ -6,7 +6,6 @@ cache:
   directories:
     - node_modules
 install:
-  - yarn global add nyc
   - yarn global add jest
   - yarn global add typescript
   - yarn install
@@ -15,6 +14,6 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - nyc --reporter=lcov yarn test
+  - yarn test
 after_script:
-  - ./cc-test-reporter after-build
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
