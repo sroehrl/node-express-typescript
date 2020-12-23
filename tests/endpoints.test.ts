@@ -37,7 +37,7 @@ describe('Endpoint tests', () => {
     it('should return index fallback', async () => {
         let response = await fakeRequest.get('/does-not-exist');
         expect(response.status).toBe(200);
-        expect(response.text).toContain('<p>static frontend</p>');
+        expect(response.text).toContain('<div class="container">');
     })
     it('should return public test', async () => {
         let response = await fakeRequest.get('/api/public');
