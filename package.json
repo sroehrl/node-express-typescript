@@ -9,7 +9,8 @@
   "scripts": {
     "run:dev": "nodemon -r dotenv/config dist/index.js",
     "build:dev": "tsc --watch --preserveWatchOutput",
-    "start": "concurrently \\\"yarn:build:dev\\\" \\\"yarn:run:dev\\\"",
+    "develop": "concurrently \\\"yarn:build:dev\\\" \\\"yarn:run:dev\\\"",
+    "start": "node dist/index.js",
     "test": "jest --setupFiles --runInBand --coverage"
   },
   "dependencies": {
