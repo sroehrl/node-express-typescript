@@ -2,11 +2,17 @@ import {Model} from "../Model";
 import mysql from "../../utils/mysql";
 import bcrypt from "bcrypt";
 
+interface RegistrationInterface {
+    id?: string,
+    userName: string,
+    password: string
+}
+
 class User extends Model{
     constructor() {
         super('user',['password']);
     }
-    async create(newObject): Promise<UserInterface>{
+    async create(newObject: RegistrationInterface): Promise<UserInterface>{
         newObject.id = await this.createId();
         newObject.password = await bcrypt.hash(newObject.password, 10);
         try{

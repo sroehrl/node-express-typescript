@@ -32,13 +32,17 @@ async function processMigration(migrations) {
 async function createTable(migration) {
 
     for(const table in migration){
-        if(migration.hasOwnProperty(table)){
+        if(migration.hasOwnProperty(table) ){
+            const fields = Object.keys(migration[table]);
+            if(fields.length<1){
+                continue;
+            }
             let operation = `CREATE TABLE IF NOT EXISTS  \`${table}\` (`
-            Object.keys(migration[table]).forEach((field,i) => {
+            fields.forEach((field,i) => {
                 operation += (i > 0 ? ', ': '') + `\`${field}\` ` + migration[table][field];
             })
             operation += ')';
-            console.log(await connection.query(operation))
+            await connection.query(operation)
         }
     }
 }
