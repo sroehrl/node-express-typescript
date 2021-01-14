@@ -24,7 +24,7 @@ mysql.createConnection(config).then(c => {
             let res = this.expectedOutcomes[this.runner];
             this.runner++;
             if(res.error){
-                return res.error;
+                throw new Error(res.error);
             }
             return [res.outcome]
         },
@@ -44,8 +44,7 @@ export default {
             const [rows] = await connection.query(sql);
             return rows;
         } catch (e) {
-            console.log('Issue with query: ' + sql);
-            return [];
+            throw new Error('Issue with query: ' + sql + "\n" + e)
         }
     },
     async query(sql: string, values: Object) {
@@ -54,8 +53,7 @@ export default {
             const [rows] = await connection.execute(...prepared);
             return rows;
         } catch (e) {
-            console.log('Issue with query: ' + sql);
-            return [];
+            throw new Error('Issue with query: ' + sql + "\n" + e)
         }
     },
     async get(table, id) {
