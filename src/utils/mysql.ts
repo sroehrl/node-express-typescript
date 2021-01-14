@@ -20,13 +20,16 @@ mysql.createConnection(config).then(c => {
                 outcome:outcome
             })
         },
-        query(sql, cb){
+        async query(sql, values){
             let res = this.expectedOutcomes[this.runner];
             this.runner++;
-            cb(res.error, res.outcome);
+            if(res.error){
+                throw new Error(res.error);
+            }
+            return [res.outcome]
         },
-        execute(sql, values, cb){
-            this.query(sql, cb)
+        async execute(sql, values){
+            return await this.query(sql, values)
         }
     }
 })
@@ -36,23 +39,22 @@ export default {
     getConnection(){
         return connection;
     },
-    raw(sql){
-        return new Promise((resolve, reject)=>{
-            connection.query(sql, (err, results) => {
-                if (err) reject(err)
-                resolve(results)
-            })
-        })
+    async raw(sql){
+        try{
+            const [rows] = await connection.query(sql);
+            return rows;
+        } catch (e) {
+            throw new Error('Issue with query: ' + sql + "\n" + e)
+        }
     },
-    query(sql: string, values: Object) {
-        return new Promise((resolve, reject) => {
-            const prepared = this.prepare(sql, values);
-            connection.execute(...prepared, (err, results) => {
-                if (err) reject(err)
-                resolve(results)
-            })
-        })
-
+    async query(sql: string, values: Object) {
+        const prepared = this.prepare(sql, values);
+        try{
+            const [rows] = await connection.execute(...prepared);
+            return rows;
+        } catch (e) {
+            throw new Error('Issue with query: ' + sql + "\n" + e)
+        }
     },
     async get(table, id) {
         try{

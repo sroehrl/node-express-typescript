@@ -30,7 +30,7 @@ _Note:_ typescript und yarn are ideally installed globally
 - Copy `.env_example` to `.env` and adjust its variables accordingly.
 - **optional**: adjust _models/user/migration.js_ and _models/user/UerInterface.ts_ to your needs
 - run `node migrate` to write table(s) to your database
-- run `yarn develop`
+- run `yarn start`
 
 ## Authentication
 

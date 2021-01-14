@@ -45,6 +45,12 @@ describe('Internals tests', () => {
         let create = await f.create({name:'worked'})
         expect(create.name).toBe('worked')
 
+        // fail
+        connection.addExpectedOutcome(['error'],[]);
+        let fail = await f.get('any');
+        expect(fail).toBe(null);
+        connection.addExpectedOutcome(['error'],null);
+        await expect(mysql.raw('anything')).rejects.toThrow(/Issue with query:/)
     })
 
 })
