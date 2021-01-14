@@ -72,9 +72,9 @@ export default {
         return this.query(`SELECT *, HEX(id) as id FROM \`${table}\` WHERE ${this.generator(conditions, 'AND')}`, conditions)
     },
     update(table, changeObj){
-        const stripedId = Object.assign({}, changeObj);
-        delete stripedId.id;
-        return this.query(`UPDATE \`${table}\` SET ${this.generator(stripedId, ' AND')} WHERE id = UNHEX({{id}})`, changeObj)
+        const strippedId = Object.assign({}, changeObj);
+        delete strippedId.id;
+        return this.query(`UPDATE \`${table}\` SET ${this.generator(strippedId, ' AND')} WHERE id = UNHEX({{id}})`, changeObj)
     },
     generator(objectValues, separator: string = ','): string {
         let generator = '';
