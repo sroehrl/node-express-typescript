@@ -20,13 +20,16 @@ mysql.createConnection(config).then(c => {
                 outcome:outcome
             })
         },
-        query(sql, cb){
+        async query(sql, values){
             let res = this.expectedOutcomes[this.runner];
             this.runner++;
-            cb(res.error, res.outcome);
+            if(res.error){
+                return res.error;
+            }
+            return [res.outcome]
         },
-        execute(sql, values, cb){
-            this.query(sql, cb)
+        async execute(sql, values){
+            return await this.query(sql, values)
         }
     }
 })
