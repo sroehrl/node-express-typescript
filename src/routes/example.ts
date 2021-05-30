@@ -8,7 +8,7 @@ export default  (app: Express) => {
     * public route
     * */
     app.get('/api/public', async (req:Request, res: Response) => {
-        res.json({test: 'some'});
+        res.json({test: 'new value'});
     })
     /*
     * protected route
